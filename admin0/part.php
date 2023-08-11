@@ -30,9 +30,9 @@
                             <li class="active">
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-agenda"></i><span>Edit - Pricelist</span></a>
                                 <ul class="collapse">
-                                    <li class="active"><a href="./edit.php">Car Brand</a></li>
-                                    <li><a href="index3.html">Suspension Part</a></li>
-                                    <li><a href="index3.html">Truck And Other</a></li>
+                                    <li><a href="./edit.php">Car Brand</a></li>
+                                    <li class="active"><a href="./part.php">Suspension Part</a></li>
+                                    <li><a href="./truck.php">Truck And Other</a></li>
                                 </ul>
                             </li>
                             <li>
