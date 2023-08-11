@@ -38,10 +38,9 @@
                             <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-gallery"></i><span>Design Website</span></a>
                                 <ul class="collapse">
-                                    <li><a href="index.html">IMG FrontEnd</a></li>
-                                    <li><a href="index.html">Car Brand</a></li>
-                                    <li><a href="index2.html">Type Car</a></li>
-                                    <li><a href="index3.html">Suspension Part</a></li>
+                                    <li><a href="./imgfront.php">IMG FrontEnd</a></li>
+                                    <li><a href="./carbrand.php">Car Brand</a></li>
+                                    <li><a href="./suspension.php">Suspension Part</a></li>
                                 </ul>
                             </li>
                             

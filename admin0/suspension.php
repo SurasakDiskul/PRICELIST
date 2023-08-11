@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
-<?php include ('../php/connect.php') ?>
+<?php include('../php/connect.php')?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -27,20 +27,20 @@
                             <li>
                                 <a href="index.php" aria-expanded="true"><i class="ti-desktop"></i><span>Pricelist 2023</span></a>
                             </li>
-                            <li class="active">
+                            <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-agenda"></i><span>Edit - Pricelist</span></a>
                                 <ul class="collapse">
                                     <li><a href="./edit.php">Car Brand</a></li>
-                                    <li class="active"><a href="./part.php">Suspension Part</a></li>
+                                    <li><a href="./part.php">Suspension Part</a></li>
                                     <li><a href="./truck.php">Truck And Other</a></li>
                                 </ul>
                             </li>
-                            <li>
+                            <li class="active">
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-gallery"></i><span>Design Website</span></a>
                                 <ul class="collapse">
                                     <li><a href="./imgfront.php">IMG FrontEnd</a></li>
                                     <li><a href="./carbrand.php">Car Brand</a></li>
-                                    <li><a href="./suspension.php">Suspension Part</a></li>
+                                    <li class="active"><a href="./suspension.php">Suspension Part</a></li>
                                 </ul>
                             </li>
                             
@@ -107,33 +107,84 @@
           <div class="col-md-12">
             <div class="card card-tasks">
               <div class="card-header ">
-                <h4 class="card-title">Suspension Part - เพิ่มจำนวนหน้าในสมุดราคาแยกตามอะไหล่รถยนต์
+                <h4 class="card-title">Suspension Part - แก้ไขรูปภาพหน้าเมนูสมุดราคาแยกตามอะไหล่รถยนต์</h4>
               </div>
               <div class="card-body ">
-              <div id="filter">
-                <?php
-                $sql = "SELECT * FROM `tbsuspension`";
-                $res = mysqli_query($conn,$sql);
-                ?>
-                        <span>เลือกอะไหล่รถยนต์ที่ต้องการ</span>
-                        <div class="row">
-                          <div class="col-5">
-                        <select class="form-select" name="fetchval" id="fetchval" >
-                            <option value="" disabled="" selected="">Select-SuspensionPart</option>
-                            <?php while($row = mysqli_fetch_assoc($res)) : ?>
-                            <option value="<?php echo $row['types'] ?>"><?php echo $row['namethai'] ?> [<?php echo $row['nameeng'] ?>]</option>
-                            <?php endwhile ?>
-                        </select>
-                        </div>
-                        </div>
-                    </div>
-                    
-                    <div class="container1">
-                    <div class="table-responsive">
-                    </div>
-                    </div>
-                    
+
+<div class="full price_table padding_infor_info">
+   <div class="row">
+      <!-- user profile section --> 
+      <!-- profile image -->
+  <div class="col-lg-12">
+      <div class="row ">
+      <div class="col-12 grid-margin">
+          <br>
+          <h4 class="card-title"></h4>
+      <div class="container1">
+          <div class="table-responsive">
+<?php 
+$sql = "SELECT * FROM `tbsuspension`";
+$result = mysqli_query($conn,$sql);
+$count = mysqli_num_rows($result);
+?>
+<div class="container">
+<div class="row justify-content-center">
+<?php
+$i = 1;
+while ($row = mysqli_fetch_assoc($result)) : ?>
+<div class="col-3 mb-5">
+  <div class="card p-5">
+    <strong class="text-center"><u> <?php echo $row['namethai'] ?></u></strong>
+    <a href="../imgweb/<?php echo $row['img'] ?>" target="_blank"><img src="../imgweb/<?php echo $row['img'] ?>" alt="" width="auto"></a><br>
+  <!-- Trigger the modal with a button -->
+  <?php
+    $aa = $row['id'];
+    $sql2 = "SELECT * FROM `tbsuspension` WHERE id = '$aa'";
+    $result2 = mysqli_query($conn,$sql2);
+    $row2 = mysqli_fetch_assoc($result2);
+  ?>
+  <button type="button" class="btn btn-warning text-dark" data-toggle="modal" data-target="#myModal<?php echo $row2['id'] ?>">Edit</button>
+
+      <!-- Modal -->
+      <div id="myModal<?php echo $row2['id'] ?>" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Page <span class="text-warning">|</span> Pricelist <span class="text-warning">2023</span> </h4>
+            </div>
+            <div class="modal-body">
+            <form class="row gy-4" action="./partedit_db.php" method="POST" enctype="multipart/form-data">                        
+                        <div class="row p-5">
+                              <label>New!! IMG PriceList</label>
+                              <input type="file" class="form-control " id="imgweb" name="imgweb" accept="image/x-png;image/gif;image/jpeg" required>
+                              <input type="hidden" id="oldfile" name="oldfile" value="<?php echo $row2["img"];?>">
+                              <input type="hidden" id="imgid" name="imgid" value="<?php echo $row2["id"];?>">
+                            </div>
+                
+                <div class="modal-footer">
+                  <button type="submit" name="submit" class="btn btn-success" onclick="return confirm('คุณต้องการกดยืนยันใช่หรือไม่?')">ตกลง</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+          </form>
+                </div>
               </div>
+            </div>
+          </div>                                                                   
+        </div>
+      </div>                          
+    <?php endwhile; ?>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
             </div>
           </div>
             </div>
@@ -151,26 +202,7 @@
         </footer>
     </div>
 <?php include('./js.php'); ?>
-<script type="text/javascript">
-        $(document).ready(function(){
-            $("#fetchval").on('change',function(){
-            var value = $(this).val();
-            console.log(value); 
 
-            $.ajax({
-                url:"fetch2.php",
-                type:"POST",
-                data: 'request=' + value ,
-                beforeSend:function(){
-                    $(".container1").html("<span>Working...</span>");
-                },
-                success:function(data){
-                    $(".container1").html(data);
-                }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

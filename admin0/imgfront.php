@@ -27,18 +27,18 @@
                             <li>
                                 <a href="index.php" aria-expanded="true"><i class="ti-desktop"></i><span>Pricelist 2023</span></a>
                             </li>
-                            <li class="active">
+                            <li>
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-agenda"></i><span>Edit - Pricelist</span></a>
                                 <ul class="collapse">
-                                    <li class="active"><a href="./edit.php">Car Brand</a></li>
+                                    <li><a href="./edit.php">Car Brand</a></li>
                                     <li><a href="./part.php">Suspension Part</a></li>
                                     <li><a href="./truck.php">Truck And Other</a></li>
                                 </ul>
                             </li>
-                            <li>
+                            <li class="active">
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-gallery"></i><span>Design Website</span></a>
                                 <ul class="collapse">
-                                    <li><a href="./imgfront.php">IMG FrontEnd</a></li>
+                                    <li class="active"><a href="./imgfront.php">IMG FrontEnd</a></li>
                                     <li><a href="./carbrand.php">Car Brand</a></li>
                                     <li><a href="./suspension.php">Suspension Part</a></li>
                                 </ul>
@@ -107,81 +107,96 @@
           <div class="col-md-12">
             <div class="card card-tasks">
               <div class="card-header ">
-                <h4 class="card-title">Carbrand - เพิ่มจำนวนหน้าในสมุดราคาแยกตามยี่ห้อรถยนต์
-                <a href="" class="btn btn-outline-secondary" style="float: right;" data-toggle="modal" data-target="#pdf">ไฟล์ PDF สมุดราคา (แบบเต็ม)</a></h4>
+                <h4 class="card-title">Frontend img - รูปภาพบนเว็บไซต์</h4>
               </div>
-                                <!-- Modal -->
-                                <div id="pdf" class="modal fade" role="dialog">
+              <div class="card-body ">
+
+                    <div class="full price_table padding_infor_info">
+                      <div class="row">
+                          <!-- user profile section --> 
+                          <!-- profile image -->
+                      <div class="col-lg-12">
+                          <div class="row ">
+                          <div class="col-12 grid-margin">
+                              <br>
+                              <h4 class="card-title"></h4>
+                          <div class="container1">  
+                          <?php 
+                            $sql = "SELECT * FROM `tbfront` where type1 != 'pricelist'";
+                            $result = mysqli_query($conn,$sql);
+                            $count = mysqli_num_rows($result);
+                          ?>
+                              <div class="container">
+                              <div class="row justify-content-center">
+                              <?php
+                            $i = 1;
+                            while ($row = mysqli_fetch_assoc($result)) : ?>
+                              <div class="col-3">
+                                <div class="card p-5">
+                                  <strong class="text-center"><u> <?php echo $row['types'] ?></u></strong>
+                                  <a href="../imgweb/<?php echo $row['img'] ?>" target="_blank"><img src="../imgweb/<?php echo $row['img'] ?>" alt="" width="auto"></a><br>
+                                <!-- Trigger the modal with a button -->
+                                <?php
+                                  $aa = $row['id'];
+                                  $sql2 = "SELECT * FROM `tbfront` WHERE id = '$aa'";
+                                  $result2 = mysqli_query($conn,$sql2);
+                                  $row2 = mysqli_fetch_assoc($result2);
+                                ?>
+                                <button type="button" class="btn btn-warning text-dark" data-toggle="modal" data-target="#myModal<?php echo $row2['id'] ?>">Edit</button>
+
+                                    <!-- Modal -->
+                                    <div id="myModal<?php echo $row2['id'] ?>" class="modal fade" role="dialog">
                                       <div class="modal-dialog">
-                                                <?php
-                                                $sql = "SELECT * FROM `tbpdf`";
-                                                $res = mysqli_query($conn,$sql);
-                                                $row = mysqli_fetch_assoc($res);
-                                                ?>
+
                                         <!-- Modal content-->
                                         <div class="modal-content">
                                           <div class="modal-header">
-                                            <h4 class="modal-title">ไฟล์ PDF สมุดราคา (แบบเต็ม)</h4>
+                                            <h4 class="modal-title">Edit Page <span class="text-warning">|</span> Pricelist <span class="text-warning">2023</span> </h4>
                                           </div>
                                           <div class="modal-body">
-                                          <form class="row gy-4" action="./editpdf_db.php" method="POST" enctype="multipart/form-data">                        
+                                          <form class="row gy-4" action="./frontedit_db.php" method="POST" enctype="multipart/form-data">                        
                                                       <div class="row p-5">
-                                                            <label>Pricelist PDF_File</label>
-                                                            <input type="file" class="form-control " id="pdf_file" name="pdf_file" accept="image/x-png;image/gif;image/jpeg" required>
-                                                            <input type="hidden" id="oldfile" name="oldfile" value="<?php echo $row["pdf_file"];?>">
+                                                      
+                                                      <div class="col-12">
+                                                      <label>Type</label>
+                                                      <input type="text" class="form-control" id="carbrand" name="carbrand" value="<?php echo $row2['types'] ?>" readonly>
+                                                      </div>
+                                                      <div class="col-12">
+                                                            <label>New!! IMG Frontend</label>
+                                                            <input type="file" class="form-control " id="images" name="images" accept="image/x-png;image/gif;image/jpeg" required>
+                                                            <input type="hidden" id="oldfile" name="oldfile" value="<?php echo $row2["img"];?>">
+                                                            <input type="hidden" id="imgid" name="imgid" value="<?php echo $row2["id"];?>">
                                                           </div>
+                                                      </div>
                                               
                                               <div class="modal-footer">
                                                 <button type="submit" name="submit" class="btn btn-success" onclick="return confirm('คุณต้องการกดยืนยันใช่หรือไม่?')">ตกลง</button>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                         </div>
                                         </form>
-                                        </div>
-                                        </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>                                                                   
+                                      </div>
+                                    </div>                          
+                                  <?php endwhile; ?>
+                                </div>
+                              </div>
+                            </div>
                                       </div>
                                     </div>
-              <div class="card-body ">
-              <div id="filter">
-                        <span>เลือกยี่ห้อรถที่ต้องการ</span>
-                        <div class="row">
-                          <div class="col-5">
-                        <select class="form-select" name="fetchval" id="fetchval" >
-                            <option value="" disabled="" selected="">Select-CarBrands</option>
-                            <option value="chevroletกระบะ">Chevrolet - กระบะ</option>
-                            <option value="chevroletเก๋ง">Chevrolet - เก๋ง</option>
-                            <option value="daihatsu">Daihatsu</option>
-                            <option value="europecar">EuropeCar - รถยุโรป</option>
-                            <option value="honda">Honda</option>
-                            <option value="hyundai">Hyundai</option>
-                            <option value="isuzu">Isuzu</option>
-                            <option value="kia">KIA</option>
-                            <option value="mazdafordกระบะ">Mazda/Ford - กระบะ</option>
-                            <option value="mazdafordเก๋ง">Mazda/Ford - เก๋ง</option>
-                            <option value="mg">MG</option>
-                            <option value="mitsubishiกระบะ">Mitsubishi - กระบะ</option>
-                            <option value="mitsubishiเก๋ง">Mitsubishi - เก๋ง</option>
-                            <option value="nissanกระบะ">Nissan - กระบะ</option>
-                            <option value="nissanเก๋ง">Nissan - เก๋ง</option>
-                            <option value="proton">Proton</option>
-                            <option value="subaru">Subaru</option>
-                            <option value="suzukiกระบะ">Suzuki - กระบะ</option>
-                            <option value="suzukiเก๋ง">Suzuki - เก๋ง</option>
-                            <option value="tata">TATA</option>
-                            <option value="ตงฟง">ตงฟง - DSFK</option>
-                            <option value="toyotaกระบะ">Toyota - กระบะ</option>
-                            <option value="toyotaเก๋ง">Toyota - เก๋ง</option>
-                        </select>
-                       
-                        </div>
-                        </div>
-                    </div>
-                    
-                    <div class="container1">
-                    <div class="table-responsive">
-                    </div>
-                    </div>
-                    
+                                  </div>
+                                </div>
+                              
               </div>
+              <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                  <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+                </div>
+              </div>
+            </div>
             </div>
           </div>
             </div>
@@ -199,26 +214,7 @@
         </footer>
     </div>
 <?php include('./js.php'); ?>
-<script type="text/javascript">
-        $(document).ready(function(){
-            $("#fetchval").on('change',function(){
-            var value = $(this).val();
-            console.log(value); 
 
-            $.ajax({
-                url:"fetch1.php",
-                type:"POST",
-                data: 'request=' + value ,
-                beforeSend:function(){
-                    $(".container1").html("<span>Working...</span>");
-                },
-                success:function(data){
-                    $(".container1").html(data);
-                }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>
